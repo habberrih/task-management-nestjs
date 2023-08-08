@@ -1,0 +1,42 @@
+version: "3.8"
+
+services:
+  # NestJS Todo Api
+  api:
+    build:
+      dockerfile: dockerfile
+      context: ./todo-api
+      target: development
+
+    volumes:
+      - ./todo-api:/todo-api/src/app
+      - /todo-api/src/app/node_modules/
+
+    # dev mode: npm run start:dev / debuf mode: npm run start:debug
+    command: npm run start:debug
+
+    environment:
+      DB_URL: postgres://user:password@postgres:5432/db
+    ports:
+      - "3000:3000"
+
+  postgres:
+    image: postgres:14.4
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: db
+
+    ports:
+      - "5437:5432"
+
+  postgres_admin:
+    image: dpage/pgadmin4:6.12
+    depends_on:
+      - postgres
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.local
+      PGADMIN_DEFAULT_PASSWORD: password
+
+    ports:
+      - "5050:80"
