@@ -4,3 +4,4 @@
 - Prisma Database with docker image
 - Nestjs & Angular
 - Task Mangement App
+- Web Socket
