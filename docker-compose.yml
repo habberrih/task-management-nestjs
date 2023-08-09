@@ -1,6 +1,23 @@
 version: "3.8"
 
 services:
+  # Angular Frontend
+  frontend:
+    build:
+      dockerfile: Dockerfile
+      context: ./angular-frontend
+      target: development
+
+    command: npm run start
+    volumes:
+      - ./angular-frontend:/todo-api/frontend/src/app
+      - /todo-api/frontend/src/app/node_modules
+
+    ports:
+      - "4200:4200"
+
+    depends_on:
+      - api
   # NestJS Todo Api
   api:
     build:
@@ -16,9 +33,9 @@ services:
     command: npm run start:dev
 
     environment:
-      DB_URL: postgresql://user:password@localhost:5437/todo_db
+      DB_URL: postgresql://user:password@localhost:5445/todo_db
     ports:
-      - 5000:4000
+      - "5000:4000"
 
   postgres:
     image: postgres:14.4
@@ -28,7 +45,7 @@ services:
       POSTGRES_DB: todo_db
 
     ports:
-      - 5437:5432
+      - 5445:5432
 
   postgres_admin:
     image: dpage/pgadmin4:6.12
