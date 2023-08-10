@@ -33,19 +33,22 @@ services:
     command: npm run start:dev
 
     environment:
-      DB_URL: postgresql://user:password@localhost:5445/todo_db
+      DB_URL: postgresql://user:password@todo-db:5432/todo_db
     ports:
       - "5000:4000"
 
   postgres:
-    image: postgres:14.4
+    container_name: todo-db
+    image: postgres:15.2-alpine
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
       POSTGRES_DB: todo_db
-
+      PGDATA: /data/postgres
+    volumes:
+      - postgres-db:/data/postgres
     ports:
-      - 5445:5432
+      - "5432:5432"
 
   postgres_admin:
     image: dpage/pgadmin4:6.12
@@ -57,3 +60,7 @@ services:
 
     ports:
       - 5050:80
+
+volumes:
+  postgres-db:
+    driver: local
