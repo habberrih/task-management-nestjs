@@ -13,6 +13,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       url: process.env.DB_URL,
       autoLoadEntities: true,
       synchronize: true,
+      username: 'user',
+      password: 'password',
     }),
     AuthModule,
     TodoModule,
