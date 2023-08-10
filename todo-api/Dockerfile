@@ -9,7 +9,7 @@ COPY tsconfig.build.json ./
 COPY tsconfig.json ./
 
 RUN npm ci
-RUN npm run build
+RUN npm run start:dev
 
 EXPOSE 4000
 
