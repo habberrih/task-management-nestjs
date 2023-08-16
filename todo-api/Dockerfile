@@ -1,5 +1,5 @@
 # Specify Node Version and Image
-FROM node:18.16.0 AS development
+FROM node:16.3.0-alpine AS development
 
 # Specify the working directory
 WORKDIR /todo-api/src/app
@@ -9,12 +9,12 @@ COPY tsconfig.build.json ./
 COPY tsconfig.json ./
 
 RUN npm ci
-RUN npm run start:dev
+RUN npm run build
 
 EXPOSE 4000
 
 
-FROM node:18.16.0 AS production
+FROM node:16.3.0-alpine AS production
 
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
