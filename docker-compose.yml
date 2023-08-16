@@ -34,6 +34,7 @@ services:
 
     environment:
       DB_URL: postgresql://user:password@todo-db:5432/todo_db
+      JWT_SECRET: hlaskdhaio123789aa
     ports:
       - "5000:4000"
 
